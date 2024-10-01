@@ -8,7 +8,8 @@
     <p><strong>Description:</strong> {{ $ticket->description }}</p>
     <p><strong>Status:</strong> {{ $ticket->status }}</p>
     <p><strong>Deadline:</strong> {{ $ticket->deadline }}</p>
-    <p><strong>Assigned User:</strong> {{ $ticket->assigned_user }}</p>
+    <p><strong>Assigned User:</strong> {{ $ticket->assigned_user_id }}</p>
+    <p><strong>User Id:</strong> {{ $ticket->user_id }}</p>
 
     <a href="{{ route('tickets.edit', $ticket->id) }}">Edit Ticket</a>
     <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">

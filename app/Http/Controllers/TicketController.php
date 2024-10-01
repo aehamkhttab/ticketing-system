@@ -31,8 +31,9 @@ class TicketController extends Controller
     }
     public function show(string $id)
     {
-        $ticket = Ticket::find($id);
-        return view('tickets.details' , ['ticket' => $ticket]);
+        //why worked with first()
+        $ticket = Ticket::where('id', $id)->with('user','assigned_user')->first();
+        return view('tickets.details',['ticket'=>$ticket]);
     }
     public function edit(string $id)
     {

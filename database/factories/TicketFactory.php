@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
@@ -24,7 +25,7 @@ class TicketFactory extends Factory
             'description' => $this->faker->paragraph ,
             'deadline' => $this->faker->date() ,
             'status' => $this->faker->randomElement(['pending' , 'ongoing' , 'finished']) ,
-            'assigned_user' => User::factory(),
+            'assigned_user_id' => User::factory(),
             'user_id' => User::factory(),
 
         ];

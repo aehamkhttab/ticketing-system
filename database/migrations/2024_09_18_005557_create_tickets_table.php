@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('deadline');
             $table->string('assigned_user');
             $table->enum('status' , ['pending' , 'ongoing' , 'finished']);
-            $table->foreignId('user_id')->constrained('users');
+           // $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
