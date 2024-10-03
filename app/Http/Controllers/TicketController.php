@@ -24,7 +24,7 @@ class TicketController extends Controller
         $ticket->description = $data['description'];
         $ticket->status = $data['status'];
         $ticket->deadline = $data['deadline'];
-        $ticket->assigned_user = $data['assigned_user'];
+        $ticket->assigned_user_id = $data['assigned_user'];
         $ticket->save();
 
         return redirect('/tickets');
@@ -48,7 +48,7 @@ class TicketController extends Controller
         $ticket->description = $data['description'];
         $ticket->status = $data['status'];
         $ticket->deadline = $data['deadline'];
-        $ticket->assigned_user = $data['assigned_user'];
+        $ticket->assigned_user_id = $data['assigned_user'];
         $ticket->save();
         return redirect('/tickets');
     }

@@ -59,6 +59,7 @@
 
 @section('content')
     <div class="container">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <h1>Tickets Overview</h1>
 
         <!-- Create Ticket Button -->
@@ -80,6 +81,11 @@
                             <p class="card-text"><small class="text-muted">Deadline: {{ $ticket->deadline }}</small></p>
                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-primary">View Details</a>
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-secondary">Edit</a>
+                            <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </div>
                     </div>
                 @endforeach
@@ -96,6 +102,11 @@
                             <p class="card-text"><small class="text-muted">Deadline: {{ $ticket->deadline }}</small></p>
                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-primary">View Details</a>
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-secondary">Edit</a>
+                            <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </div>
                     </div>
                 @endforeach
@@ -112,6 +123,11 @@
                             <p class="card-text"><small class="text-muted">Deadline: {{ $ticket->deadline }}</small></p>
                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-primary">View Details</a>
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-secondary">Edit</a>
+                            <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </div>
                     </div>
                 @endforeach
