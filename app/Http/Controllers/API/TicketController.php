@@ -89,6 +89,7 @@ class TicketController extends Controller
        try {
             $data = $request->all();
             $ticket = Ticket::find($id);
+
             $ticket->title = $data['title'];
             $ticket->description = $data['description'];
             $ticket->status = $data['status'];

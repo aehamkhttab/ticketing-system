@@ -47,8 +47,12 @@
 
                             <!-- Assigned User Field -->
                             <div class="mb-3">
-                                <label for="assigned_user" class="form-label">Assigned User ID:</label>
-                                <input type="text" name="assigned_user" id="assigned_user" class="form-control" required>
+                                <label for="assigned_user_id" class="form-label">Assigned User ID:</label>
+                                <select class="form-control" name="assigned_user_id">
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}"> {{$user->name}} </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <!-- Submit Button -->

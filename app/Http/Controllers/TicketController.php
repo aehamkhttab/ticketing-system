@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
    public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::with('assigned_user')->get();
         return view('tickets.index' , ['tickets' => $tickets]);
     }
     public function create()
     {
-        return view('tickets.create');
+        $users =  User::all();
+        return view('tickets.create', ['users' => $users]);
     }
     public function store(Request $request)
     {
@@ -24,7 +26,7 @@ class TicketController extends Controller
         $ticket->description = $data['description'];
         $ticket->status = $data['status'];
         $ticket->deadline = $data['deadline'];
-        $ticket->assigned_user_id = $data['assigned_user'];
+        $ticket->assigned_user_id = $data['assigned_user_id'];
         $ticket->save();
 
         return redirect('/tickets');
@@ -37,8 +39,9 @@ class TicketController extends Controller
     }
     public function edit(string $id)
     {
-        $ticket = Ticket::find($id);
-        return view('tickets.edit' , ['ticket' => $ticket]);
+        $users = User::all();
+        $ticket = Ticket::where('id', $id)->with('assigned_user')->first();
+        return view('tickets.edit' , ['ticket' => $ticket], ['users' => $users]);
     }
     public function update(Request $request, string $id)
     {
@@ -48,7 +51,7 @@ class TicketController extends Controller
         $ticket->description = $data['description'];
         $ticket->status = $data['status'];
         $ticket->deadline = $data['deadline'];
-        $ticket->assigned_user_id = $data['assigned_user'];
+        $ticket->assigned_user_id = $data['assigned_user_id'];
         $ticket->save();
         return redirect('/tickets');
     }

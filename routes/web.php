@@ -16,4 +16,8 @@ Route::middleware('auth')->resource('/tickets', TicketController::class);
 Route::prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'loginView'])->name('loginView');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+
+    Route::get('/signup', [AuthController::class, 'signupView'])->name('signupView');
+    Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 });

@@ -17,7 +17,7 @@
                         <p class="card-text"><strong>Description:</strong> {{ $ticket->description }}</p>
                         <p class="card-text"><strong>Status:</strong> {{ ucfirst($ticket->status) }}</p>
                         <p class="card-text"><strong>Deadline:</strong> {{ $ticket->deadline }}</p>
-                        <p class="card-text"><strong>Assigned User:</strong> {{ $ticket->assigned_user_id }}</p>
+                        <p class="card-text"><strong>Assigned User:</strong> {{ $ticket->assigned_user->name }}</p>
                         <p class="card-text"><strong>Created By User (ID):</strong> {{ $ticket->user_id }}</p>
 
                         <!-- Action Buttons -->
