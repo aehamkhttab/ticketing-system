@@ -13,11 +13,25 @@ Route::put('/tickets/{id}' , [TicketController::class, 'update'])->name('tickets
 Route::delete('/tickets/{id}/delete' , [TicketController::class, 'destroy'])->name('tickets.destroy');*/
 
 Route::middleware('auth')->resource('/tickets', TicketController::class);
+
 Route::prefix('auth')->group(function () {
+
     Route::get('/login', [AuthController::class, 'loginView'])->name('loginView');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
     Route::get('/signup', [AuthController::class, 'signupView'])->name('signupView');
     Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+
+
+    Route::get('/forget-password', [AuthController::class, 'forgetPasswordView'])->name('forgetPasswordView');
+    Route::post('/forget-password', [AuthController::class, 'forgetPassword'])->name('forgetPassword');
+
+    Route::get('/reset-password/{token}', [AuthController::class, 'resetPasswordView'])->name('resetPasswordView');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
+
+
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+

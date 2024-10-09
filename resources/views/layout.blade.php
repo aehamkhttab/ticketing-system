@@ -33,9 +33,7 @@
 </body>
 </html>
 --}}
-
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -54,8 +52,8 @@
 
         /* Dark Mode */
         body.dark-mode {
-            background-color: #181818 !important; /* Dark background */
-            color: #f5f5f5 !important; /* Light text */
+            background-color: #181818 !important;
+            color: #f5f5f5 !important;
         }
 
         /* Dark Mode for Header, Footer, and Navbar */
@@ -66,8 +64,8 @@
 
         /* Dark Mode for Cards */
         .dark-mode .card {
-            background-color: #282828 !important; /* Darker card background */
-            color: #f5f5f5 !important; /* Light text */
+            background-color: #282828 !important;
+            color: #f5f5f5 !important;
         }
 
         /* Dark Mode Buttons */
@@ -93,13 +91,23 @@
     </style>
 </head>
 <body>
+
 <header>
-    <div class="container">
+    <div class="container d-flex justify-content-between align-items-center py-3">
         <h1>Ticket Management System</h1>
         <nav>
-            <a href="{{ route('tickets.index') }}">Home</a>
+            <a href="{{ route('tickets.index') }}" class="btn btn-link">Home</a>
+
+            <!-- Only show the logout button if the user is logged in -->
+            @if(Auth::check())
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            @endif
         </nav>
     </div>
+
     <!-- Toggle Dark Mode Switch -->
     <div class="container mt-2">
         <label for="dark-mode-toggle">Enable Dark Mode</label>
@@ -115,7 +123,7 @@
     <p>&copy; 2024 Ticket Management System</p>
 </footer>
 
-<!-- Include Bootstrap JS (Optional) -->
+<!-- Include Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Dark Mode Toggle Script -->
@@ -140,5 +148,6 @@
         }
     });
 </script>
+
 </body>
 </html>

@@ -14,6 +14,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h3 class="card-title">{{ $ticket->title }}</h3>
+                        <p class="card-text"><strong>Ticket ID:</strong> {{ $ticket->id }}</p>
                         <p class="card-text"><strong>Description:</strong> {{ $ticket->description }}</p>
                         <p class="card-text"><strong>Status:</strong> {{ ucfirst($ticket->status) }}</p>
                         <p class="card-text"><strong>Deadline:</strong> {{ $ticket->deadline }}</p>

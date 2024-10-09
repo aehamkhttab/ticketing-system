@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 
 
 class TicketController extends Controller
@@ -44,7 +45,9 @@ class TicketController extends Controller
             $ticket->description = $data['description'];
             $ticket->status = $data['status'];
             $ticket->deadline = $data['deadline'];
-            $ticket->assigned_user = $data['assigned_user'];
+            $ticket->assigned_user_id = $data['assigned_user_id'];
+            $ticket->user_id = $request->user('api')->id;
+            $ticket->user_id = Auth::user()->id;
             $ticket->save();
             return response()->json([
                 "msg" => "Ticket created successfully",
@@ -94,7 +97,7 @@ class TicketController extends Controller
             $ticket->description = $data['description'];
             $ticket->status = $data['status'];
             $ticket->deadline = $data['deadline'];
-            $ticket->assigned_user = $data['assigned_user'];
+            $ticket->assigned_user_id = $data['assigned_user_id'];
             $ticket->save();
             return response()->json([
                 "msg" => "Ticket updated successfully",

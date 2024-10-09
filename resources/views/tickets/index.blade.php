@@ -78,8 +78,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $ticket->title }}</h5>
                             <p class="card-text">{{ $ticket->description }}</p>
-                            <p class="card-text" ><small class="text-muted " >Assigned to: {{ $ticket->assigned_user->name }}</small></p>
-                            <p class="card-text"><small class="text-muted" >Deadline: {{ $ticket->deadline }}</small></p>
+                            <p class="card-text" ><small>Assigned to: {{ $ticket->assigned_user->name }}</small></p>
+                            <p class="card-text"><small>Deadline: {{ $ticket->deadline }}</small></p>
                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-primary">View Details</a>
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-secondary">Edit</a>
                             <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">
@@ -100,8 +100,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $ticket->title }}</h5>
                             <p class="card-text">{{ $ticket->description }}</p>
-                            <p class="card-text" ><small class="text-muted " >Assigned to: {{ $ticket->assigned_user->name }}</small></p>
-                            <p class="card-text" ><small class="text-muted " >Deadline: {{ $ticket->deadline }}</small></p>
+                            <p class="card-text" ><small>Assigned to: {{ $ticket->assigned_user->name }}</small></p>
+                            <p class="card-text" ><small>Deadline: {{ $ticket->deadline }}</small></p>
                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-primary">View Details</a>
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-secondary">Edit</a>
                             <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">
@@ -122,8 +122,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $ticket->title }}</h5>
                             <p class="card-text">{{ $ticket->description }}</p>
-                            <p class="card-text" ><small class="text-muted " >Assigned to: {{ $ticket->assigned_user->name }}</small></p>
-                            <p class="card-text"><small class="text-muted">Deadline: {{ $ticket->deadline }}</small></p>
+                            <p class="card-text" ><small>Assigned to: {{ $ticket->assigned_user->name }}</small></p>
+                            <p class="card-text"><small>Deadline: {{ $ticket->deadline }}</small></p>
                             <a href="{{ route('tickets.show', $ticket->id) }}" class="btn btn-primary">View Details</a>
                             <a href="{{ route('tickets.edit', $ticket->id) }}" class="btn btn-secondary">Edit</a>
                             <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display:inline;">

@@ -27,13 +27,13 @@ class TicketController extends Controller
         $ticket->status = $data['status'];
         $ticket->deadline = $data['deadline'];
         $ticket->assigned_user_id = $data['assigned_user_id'];
+        $ticket->user_id = $request->user()->id;
         $ticket->save();
 
         return redirect('/tickets');
     }
     public function show(string $id)
     {
-        //why worked with first()
         $ticket = Ticket::where('id', $id)->with('user','assigned_user')->first();
         return view('tickets.details',['ticket'=>$ticket]);
     }
@@ -41,7 +41,7 @@ class TicketController extends Controller
     {
         $users = User::all();
         $ticket = Ticket::where('id', $id)->with('assigned_user')->first();
-        return view('tickets.edit' , ['ticket' => $ticket], ['users' => $users]);
+        return view('tickets.edit' , ['ticket' => $ticket,'users' => $users]);
     }
     public function update(Request $request, string $id)
     {
@@ -53,7 +53,7 @@ class TicketController extends Controller
         $ticket->deadline = $data['deadline'];
         $ticket->assigned_user_id = $data['assigned_user_id'];
         $ticket->save();
-        return redirect('/tickets');
+        return redirect()->route('tickets.show', $ticket->id)->with('message' , 'Ticket has been updated');
     }
     public function destroy(string $id)
     {

@@ -50,7 +50,9 @@
                                 <label for="assigned_user_id" class="form-label">Assigned User ID:</label>
                                 <select class="form-control" name="assigned_user_id">
                                     @foreach($users as $user)
-                                        <option value="{{$user->id}}"> {{$user->name}} </option>
+                                        <option value="{{$user->id}}" @selected($ticket->assigned_user_id == $user->id)>
+                                            {{$user->name}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
