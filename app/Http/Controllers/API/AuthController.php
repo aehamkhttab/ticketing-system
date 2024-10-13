@@ -101,21 +101,27 @@ class AuthController extends Controller
     {
        try {
             $user = $request->user();
-            if ($user)
-            {
+            if ($user) {
                 $user->currentAccessToken()->delete();
+
+                return response()->json([
+                    "msg" => "You are logged out",
+                    "success" => true,
+                    "data" => []
+                ], 200);
+            } else {
+                return response()->json([
+                    "msg" => "No user found",
+                    "success" => false,
+                    "data" => []
+                ], 400);
             }
-            return response()->json([
-                "msg" => "You are logged out",
-                "success" => true,
-                "data" => []
-            ],200);
         }catch (Exception $e){
            return response()->json([
                "msg" => $e->getMessage(),
                "success" => false,
                "data" => []
-           ]);
+           ],500);
        }
     }
 }

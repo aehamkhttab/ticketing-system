@@ -19,6 +19,7 @@ class TicketFactory extends Factory
     protected $statuses = ['pending' , 'ongoing' , 'finished'];
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('en_GB');
 
         return [
             'title' => $this->faker->sentence ,

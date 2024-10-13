@@ -11,7 +11,8 @@ class TicketController extends Controller
    public function index()
     {
         $tickets = Ticket::with('assigned_user')->get();
-        return view('tickets.index' , ['tickets' => $tickets]);
+        $sorted=$tickets->sortBy('deadline');
+        return view('tickets.index' , ['tickets' => $sorted]);
     }
     public function create()
     {
@@ -20,15 +21,36 @@ class TicketController extends Controller
     }
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->validate([
+            'title' => 'required|max:30|string',
+            'description' => 'required|min:35 ',
+            'status' => 'required|in:pending,ongoing,finished',
+            'assigned_user_id' => 'exists:users,id',
+            'deadline' => 'after:now',
+
+        ],
+            [
+                'title.required' => 'Title is required',
+                'title.max' => 'Title must be 30 characters',
+                'title.string' => 'Title must be string',
+                'description.required' => 'Description is required',
+                'description.min' => 'Description must be at least 35 characters',
+                'status.required' => 'Status is required',
+                'status.in' => 'Status must be one of "pending", "ongoing", "finished"',
+                'deadline.after' => 'Deadline must be after today',
+
+            ]
+        );
         $ticket = new Ticket();
         $ticket->title = $data['title'];
         $ticket->description = $data['description'];
         $ticket->status = $data['status'];
         $ticket->deadline = $data['deadline'];
         $ticket->assigned_user_id = $data['assigned_user_id'];
+        //$ticket->user_id = $request->user()->id->equals(2);
         $ticket->user_id = $request->user()->id;
         $ticket->save();
+
 
         return redirect('/tickets');
     }
@@ -43,6 +65,8 @@ class TicketController extends Controller
         $ticket = Ticket::where('id', $id)->with('assigned_user')->first();
         return view('tickets.edit' , ['ticket' => $ticket,'users' => $users]);
     }
+
+    //TODO: add validation for update method then edit on view to show it
     public function update(Request $request, string $id)
     {
         $data = $request->all();

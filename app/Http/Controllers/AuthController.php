@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
-class AuthController extends Controller
+class  AuthController extends Controller
 {
     public function loginView()
     {

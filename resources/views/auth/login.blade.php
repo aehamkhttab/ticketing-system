@@ -44,6 +44,11 @@
                         </div>
                     </form>
 
+                    <!-- Sign Up Button -->
+                    <div class="d-grid mt-3">
+                        <a href="{{ route('signupView') }}" class="btn btn-secondary">Sign Up</a>
+                    </div>
+
                     <!-- Error Message Display -->
                     @if(Session::has('error'))
                         <div class="alert alert-danger mt-3" role="alert">

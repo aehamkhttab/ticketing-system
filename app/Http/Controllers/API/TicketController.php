@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         try {
@@ -33,9 +31,7 @@ class TicketController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    //TODO: add validation for store method
     public function store(Request $request)
     {
         try{
@@ -49,6 +45,8 @@ class TicketController extends Controller
             $ticket->user_id = $request->user('api')->id;
             $ticket->user_id = Auth::user()->id;
             $ticket->save();
+            //mass assignment ->
+            //Ticket::create($data);
             return response()->json([
                 "msg" => "Ticket created successfully",
                 "success" => true,
@@ -63,9 +61,7 @@ class TicketController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         try{
@@ -84,15 +80,12 @@ class TicketController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    //TODO: add validation for update method
     public function update(Request $request, string $id)
     {
        try {
             $data = $request->all();
             $ticket = Ticket::find($id);
-
             $ticket->title = $data['title'];
             $ticket->description = $data['description'];
             $ticket->status = $data['status'];
@@ -113,11 +106,57 @@ class TicketController extends Controller
        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
-        //
+        try {
+            $ticket = Ticket::find($id);
+            $ticket->delete();
+            return response()->json([
+                "msg" => "Ticket deleted successfully",
+                "success" => true,
+                "data" => $ticket
+            ]);
+        }catch (Exception $e){
+            return response()->json([
+                "msg"=>$e->getMessage(),
+                "success"=>false,
+                "data"=>[]
+            ]);
+        }
+    }
+    public function showTrashedTickets(){
+        try {
+            $tickets = Ticket::onlyTrashed()->get();
+            //$tickets->restore();
+            return response()->json([
+                "msg" => "The deleted tickets",
+                "success" => true,
+                "data" => $tickets
+            ]);
+        }catch (Exception $e){
+            return response()->json([
+                "msg"=>$e->getMessage(),
+                "success"=>false,
+                "data"=>[]
+            ]);
+        }
+    }
+    public function restoreTrashedTickets($id){
+        try {
+            $tickets = Ticket::onlyTrashed()->find($id);
+            $tickets->restore();
+            return response()->json([
+                "msg" => "The deleted ticket restored successfully",
+                "success" => true,
+                "data" => $tickets
+            ]);
+        }catch (Exception $e){
+            return response()->json([
+                "msg"=>$e->getMessage(),
+                "success"=>false,
+                "data"=>[]
+            ]);
+        }
     }
 }

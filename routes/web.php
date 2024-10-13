@@ -12,6 +12,12 @@ Route::get('/tickets/{id}/edit' , [TicketController::class, 'edit'])->name('tick
 Route::put('/tickets/{id}' , [TicketController::class, 'update'])->name('tickets.update');
 Route::delete('/tickets/{id}/delete' , [TicketController::class, 'destroy'])->name('tickets.destroy');*/
 
+//TODO: Add home page before login [home -> login or signup -> Tickets page ]
+
+
+Route::get('/',function(){
+    return redirect('auth/login');
+});
 Route::middleware('auth')->resource('/tickets', TicketController::class);
 
 Route::prefix('auth')->group(function () {
