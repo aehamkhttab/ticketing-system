@@ -20,6 +20,8 @@ Route::get('/',function(){
 });
 Route::middleware('auth')->resource('/tickets', TicketController::class);
 
+
+
 Route::prefix('auth')->group(function () {
 
     Route::get('/login', [AuthController::class, 'loginView'])->name('loginView');
@@ -36,6 +38,9 @@ Route::prefix('auth')->group(function () {
     Route::get('/reset-password/{token}', [AuthController::class, 'resetPasswordView'])->name('resetPasswordView');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
 
+
+    Route::get('/attachments/download/{id}', [TicketController::class, 'downloadAttachment'])->name('attachments.download');
+    Route::delete('/attachments/{id}', [TicketController::class, 'deleteAttachment'])->name('attachments.destroy');
 
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

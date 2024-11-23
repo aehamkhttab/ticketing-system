@@ -11,15 +11,15 @@ Route::get('/user', function (Request $request) {
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('tickets',[TicketController::class, 'index']);
-    Route::post('/tickets', [TicketController::class, 'store']);
-    Route::get('/tickets/{id}', [TicketController::class, 'show']);
-    Route::put('/tickets/{id}', [TicketController::class, 'update']);
-    Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
-    Route::post('/tickets/deleted-tickets' , [TicketController::class, 'showTrashedTickets']);
-    Route::post('/tickets/deleted-tickets/{id}' , [TicketController::class, 'restoreTrashedTickets']);
+    Route::get('',[TicketController::class, 'index']);
+    Route::post('/', [TicketController::class, 'store']);
+    Route::get('/{id}', [TicketController::class, 'show']);
+    Route::put('/{id}', [TicketController::class, 'update']);
+    Route::delete('/{id}', [TicketController::class, 'destroy']);
+    Route::post('/deleted-tickets' , [TicketController::class, 'showTrashedTickets']);
+    Route::post('/deleted-tickets/{id}' , [TicketController::class, 'restoreTrashedTickets']);
 
-});
+})->prefix('tickets');
 
 
 Route::post('auth/login', [AuthController::class, 'login']);

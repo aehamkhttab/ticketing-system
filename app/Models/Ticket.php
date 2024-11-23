@@ -47,4 +47,8 @@ class Ticket extends Model
         //TODO: Make Relation is  belongs to many after adding pivot table
         return $this-> belongsTo(User::class, 'assigned_user_id');
     }
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
 }

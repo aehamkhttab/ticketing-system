@@ -35,6 +35,29 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         try{
+            $data = $request->validate([
+                'title' => 'required|max:30|string',
+                'description' => 'required|min:35 ',
+                'status' => 'required|in:pending,ongoing,finished',
+                'assigned_user_id' => 'exists:users,id',
+                'deadline' => 'after:now',
+                'attachment' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx,xlsx|max:2048'
+
+            ],
+                [
+                    'title.required' => 'Title is required',
+                    'title.max' => 'Title must be 30 characters',
+                    'title.string' => 'Title must be string',
+                    'description.required' => 'Description is required',
+                    'description.min' => 'Description must be at least 35 characters',
+                    'status.required' => 'Status is required',
+                    'status.in' => 'Status must be one of "pending", "ongoing", "finished"',
+                    'deadline.after' => 'Deadline must be after today',
+                    'attachment.mimes' => 'File type must be .[jpg,jpeg,png,pdf,doc,docx,xlsx]',
+                    'attachment.max' => 'File size must be equal or smaller than 2MB'
+
+                ]
+            );
             $data = $request->all();
             $ticket = new Ticket();
             $ticket->title = $data['title'];
@@ -45,8 +68,6 @@ class TicketController extends Controller
             $ticket->user_id = $request->user('api')->id;
             $ticket->user_id = Auth::user()->id;
             $ticket->save();
-            //mass assignment ->
-            //Ticket::create($data);
             return response()->json([
                 "msg" => "Ticket created successfully",
                 "success" => true,
@@ -84,6 +105,27 @@ class TicketController extends Controller
     public function update(Request $request, string $id)
     {
        try {
+           $data = $request->validate([
+               'title' => 'required|max:30|string',
+               'description' => 'required|min:35 ',
+               'status' => 'required|in:pending,ongoing,finished',
+               'assigned_user_id' => 'exists:users,id',
+               'deadline' => 'after:now',
+               'attachment' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx,xlsx'
+
+           ],
+               [
+                   'title.required' => 'Title is required',
+                   'title.max' => 'Title must be 30 characters',
+                   'title.string' => 'Title must be string',
+                   'description.required' => 'Description is required',
+                   'description.min' => 'Description must be at least 35 characters',
+                   'status.required' => 'Status is required',
+                   'status.in' => 'Status must be one of "pending", "ongoing", "finished"',
+                   'deadline.after' => 'Deadline must be after today',
+
+               ]
+           );
             $data = $request->all();
             $ticket = Ticket::find($id);
             $ticket->title = $data['title'];
