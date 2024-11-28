@@ -19,15 +19,16 @@ class TicketFactory extends Factory
     protected $statuses = ['pending' , 'ongoing' , 'finished'];
     public function definition(): array
     {
-        $faker = \Faker\Factory::create('en_GB');
+        $users = User::all();
+        $ids = $users->pluck('id');
 
         return [
             'title' => $this->faker->sentence ,
             'description' => $this->faker->paragraph ,
             'deadline' => $this->faker->date() ,
             'status' => $this->faker->randomElement(['pending' , 'ongoing' , 'finished']) ,
-            'assigned_user_id' => User::factory(),
-            'user_id' => User::factory(),
+            'assigned_user_id' => $this->faker->randomElement($ids),
+            'user_id' => $this->faker->randomElement($ids),
 
         ];
     }

@@ -10,11 +10,21 @@ use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
-   public function index()
+   public function index(Request $request)
     {
-        $tickets = Ticket::with('assigned_user')->get();
+        /*$tickets = Ticket::with('assigned_user')->paginate(10);
         $sorted=$tickets->sortBy('deadline');
-        return view('tickets.index' , ['tickets' => $sorted]);
+        return view('tickets.index' , ['tickets' => $sorted]);*/
+
+        $sortOrder = $request->get('sort', 'asc');
+
+        $pendingTickets = Ticket::where('status', 'pending')->orderBy('deadline', $sortOrder)->paginate(5, ['*'], 'pending_page');
+        $ongoingTickets = Ticket::where('status', 'ongoing')->orderBy('deadline', $sortOrder)->paginate(5, ['*'], 'ongoing_page');
+        $finishedTickets = Ticket::where('status', 'finished')->orderBy('deadline', $sortOrder)->paginate(5, ['*'], 'finished_page');
+
+        return view('tickets.index', compact('pendingTickets', 'ongoingTickets', 'finishedTickets', 'sortOrder'));
+
+
     }
     public function create()
     {
@@ -68,11 +78,6 @@ class TicketController extends Controller
         }
         return redirect('/tickets');
     }
-    /*public function show(string $id)
-    {
-        $ticket = Ticket::where('id', $id)->with('user','assigned_user')->first();
-        return view('tickets.details',['ticket'=>$ticket]);
-    }*/
     public function show(string $id)
     {
         $ticket = Ticket::where('id', $id)
@@ -85,7 +90,7 @@ class TicketController extends Controller
     {
 
         $attachment = Attachment::findOrFail($attachmentId);
-        $filePath = storage_path('app/public/attachments/'
+        $filePath = storage_path('/public/storage/attachment/'
             . $attachment->file_name);
         if (file_exists($filePath)) {
             return response()->download($filePath);
@@ -125,7 +130,12 @@ class TicketController extends Controller
             ]
         );
         $ticket = Ticket::find($id);
-        $ticket->update($data);
+        $ticket->title = $data['title'];
+        $ticket->description = $data['description'];
+        $ticket->status = $data['status'];
+        $ticket->deadline = $data['deadline'];
+        $ticket->assigned_user_id = $data['assigned_user_id'];
+        $ticket->save();
 
         if ($request-> hasFile('attachment'))
         {
@@ -149,12 +159,12 @@ class TicketController extends Controller
         return redirect('/tickets');
     }
 
-    public function deleteAttachment($attachmentId)
+    public function deleteAttachment($id)
     {
-        $attachment = Attachment::findOrFail($attachmentId);
+        $attachment = Attachment::findOrFail($id);
         Storage::disk('public')->delete($attachment->file_path);
         $attachment->delete();
-
-        return back()->with('message', 'Attachment deleted successfully.');
+        return back()->with('success', 'Attachment deleted successfully.');
     }
+
 }
